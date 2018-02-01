@@ -23,6 +23,17 @@ def app(environ, start_response):
     os.environ.setdefault('REQUEST_METHOD', environ['REQUEST_METHOD'])
     os.environ.setdefault('URI_PATH', environ['PATH_INFO'])
 
+    # Instantiate Route from environ
+    router = Route(environ)
+
+    if router.is_post():
+        # Set POST parameters given into the query string to centralize parsing and retrieval.
+        # This was made to directly support the Request.input() method.
+        # There is no known reason to differentiate between GET and POST when retrieving
+        #    form paramters. This line below simply puts both POST form params in the
+        #    same query_string as GET params.
+        environ['QUERY_STRING'] = router.set_post_params()
+
     # Instantiate the Service Container
     app = App()
 
@@ -43,16 +54,6 @@ def app(environ, start_response):
 
     # Load the container into the request
     app.make('Request').load_app(app)
-
-    router = Route(environ)
-
-    if router.is_post():
-        # Set POST parameters given into the query string to centralize parsing and retrieval.
-        # This was made to directly support the Request.input() method.
-        # There is no known reason to differentiate between GET and POST when retrieving
-        #    form paramters. This line below simply puts both POST form params in the
-        #    same query_string as GET params.
-        environ['QUERY_STRING'] = router.set_post_params()
 
     # Get all routes from the routes/web.py file
     import routes.web
