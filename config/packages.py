@@ -1,4 +1,4 @@
-''' Packages Configuration '''
+''' Packages Configuration Settings '''
 
 '''
 |--------------------------------------------------------------------------
