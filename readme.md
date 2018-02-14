@@ -1,6 +1,6 @@
-# Starter Template
+# Starter Template (Abandoned)
 
-The starter template for Masonite.
+The starter template for Masonite. 
 
 ### Note
 
